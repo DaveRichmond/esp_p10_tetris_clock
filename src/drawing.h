@@ -247,6 +247,7 @@ fall_instr getFallinstrByNum(int num, int blockindex)
   {
     return num_9[blockindex];
   }
+  return num_0[blockindex];
 }
 
 // *********************************************************************
@@ -294,6 +295,7 @@ int getBocksizeByNum(int num)
   {
     return SIZE_NUM_9;
   }
+  return SIZE_NUM_0; // bad input
 }
 
 // *********************************************************************
@@ -376,19 +378,10 @@ void drawNumbers()
 }
 
 // *********************************************************************
-// Handler for the display refresh ticker
-// *********************************************************************
-void display_updater()
-{
-  // ISR for display refresh
-  display.display(70);
-}
-
-// *********************************************************************
 // Handler for the number refresh ticker
 // *********************************************************************
 void number_updater()
 {
-  display.clearDisplay();
+  display.fillRect(0, 0, 32, 32, ST7735_BLACK);
   drawNumbers();
 }

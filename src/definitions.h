@@ -6,7 +6,7 @@ Ticker display_ticker;          // Ticker that triggers redraw of the screen
 Ticker timer_ticker;            // Ticker that triggers one revolution in the falling animation
 
 // NTP
-int8_t timeZone = 1;            // Timezone for NTP client
+int8_t timeZone = 10;            // Timezone for NTP client
 int8_t minutesTimeZone = 0;     // Minutes difference for time zone
 
 // Globals
@@ -21,10 +21,11 @@ WiFiManager wifiManager;        // Global WiFiManager object
 #define AP_TIMEOUT 300
 
 
-// Pins for LED MATRIX
-#define P_LAT 16
-#define P_A 5
-#define P_B 4
-#define P_C 15
-#define P_OE 2
-PxMATRIX display(32,16, P_LAT, P_OE,P_A,P_B,P_C);
+#define TFT_CS     D1
+#define TFT_RST    D2  // you can also connect this to the Arduino reset
+                        // in which case, set this #define pin to 0!
+#define TFT_DC     D3
+#define TFT_SCLK   D5   // set these to be whatever pins you like!
+#define TFT_MOSI   D6   // set these to be whatever pins you like!
+#define TFT_LED	   D7
+Adafruit_ST7735 display = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);

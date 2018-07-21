@@ -1,6 +1,8 @@
 #define PATTERN4
 #include <Ticker.h>
-#include <PxMatrix.h>         // Download from: https://github.com/2dom/PxMatrix/, needs https://github.com/adafruit/Adafruit-GFX-Library via library manager
+#include <Adafruit_GFX.h>    // Core graphics library
+//#include <Adafruit_ST7735.h> // Hardware-specific library
+#include <Adafruit_ST7735.h>
 #include <TimeLib.h>
 #include <NtpClientLib.h>     // https://github.com/gmag11/NtpClient via library manager
 #include <ESP8266WiFi.h>
@@ -25,8 +27,11 @@ void setup()
 {
   Serial.begin(115200);
 
-  display.begin();
-  display.clearDisplay();
+  display.initR(INITR_144GREENTAB);
+  display.fillScreen(ST7735_BLACK);
+
+  pinMode(TFT_LED, OUTPUT);
+  digitalWrite(TFT_LED, HIGH);
 
   // Draw intro while WiFi is connecting
   drawIntro();
@@ -45,9 +50,6 @@ void setup()
 
   init_state = 1;
 
-  display_ticker.attach(0.001, display_updater);
-  yield();
-  delay(2000);
   // display.clearDisplay();
 }
 
