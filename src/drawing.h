@@ -372,8 +372,8 @@ void drawNumbers()
   // Hour / minutes divider (blinking)
   if (seconds_odd)
   {
-    display.fillRect(15, 12, 2, 2, myWHITE);
-    display.fillRect(15, 8, 2, 2, myWHITE);
+    display.drawPixel(15, 12, myWHITE);
+    display.drawPixel(15,8, myWHITE);
   }
 }
 
@@ -382,6 +382,8 @@ void drawNumbers()
 // *********************************************************************
 void number_updater()
 {
-  display.fillRect(0, 0, 32, 32, ST7735_BLACK);
+  display.swap();
+  display.clear();
   drawNumbers();
+  display.sync();
 }

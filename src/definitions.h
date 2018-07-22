@@ -28,4 +28,5 @@ WiFiManager wifiManager;        // Global WiFiManager object
 #define TFT_SCLK   D5   // set these to be whatever pins you like!
 #define TFT_MOSI   D6   // set these to be whatever pins you like!
 #define TFT_LED	   D7
-Adafruit_ST7735 display = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
+Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
+DisplayEmulator display(32, 32);

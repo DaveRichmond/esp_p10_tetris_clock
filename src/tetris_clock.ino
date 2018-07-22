@@ -13,6 +13,7 @@
 #include <WiFiManager.h>      // https://github.com/tzapu/WiFiManager WiFi Configuration Magic
 
 // Local includes
+#include "display.h"
 #include "definitions.h"
 #include "colors.h"
 #include "numbers.h"
@@ -27,8 +28,10 @@ void setup()
 {
   Serial.begin(115200);
 
-  display.initR(INITR_144GREENTAB);
-  display.fillScreen(ST7735_BLACK);
+  tft.initR(INITR_144GREENTAB);
+  tft.fillScreen(ST7735_BLACK);
+
+  display.setTFT(std::make_shared<Adafruit_ST7735>(tft));
 
   pinMode(TFT_LED, OUTPUT);
   digitalWrite(TFT_LED, HIGH);
@@ -51,6 +54,7 @@ void setup()
   init_state = 1;
 
   // display.clearDisplay();
+  tft.fillScreen(display.color565(0,0,0));
 }
 
 void loop()
