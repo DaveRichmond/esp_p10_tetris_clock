@@ -54,7 +54,7 @@ void setup()
   init_state = 1;
 
   // display.clearDisplay();
-  tft.fillScreen(display.color565(0,0,0));
+  display.fillScreen(display.color565(0,0,0));
 }
 
 void loop()

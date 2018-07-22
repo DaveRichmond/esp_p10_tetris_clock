@@ -6,6 +6,14 @@
 #include <memory>
 #include <vector>
 
+// this original tetris clock code this is based on uses a fixed size 32x32 led display
+// it assumes clearing takes no time. For the most part, it only used pixel set commands 
+// and some text functions. These can be tracked in an intermediate pair of framebuffers
+// to double buffer the display. Then we can just write the deltas out along with
+// scaling the output
+// shim in a display that takes an adafruit gfx tft
+// and then automatically scales the original display to closely match the tft
+
 class DisplayEmulator {
 public:
     DisplayEmulator(const int width, const int height)
@@ -16,6 +24,14 @@ public:
           }
     void setTFT(std::shared_ptr<Adafruit_GFX> tft){
         this->tft = tft;
+        this->scale = std::min(
+            tft.get()->width() / this->width(),
+            tft.get()->height() / this->height());
+        this->scale = std::max(1, this->scale); // ensure we don't drop below 1
+        Serial.println("Setting scale factor to " + String(this->scale));
+    }
+    void fillScreen(uint16_t colour){
+        tft.get()->fillScreen(colour);
     }
     void drawPixel(int x, int y, uint16_t colour){
         if(x >= 0 && x < width()){
@@ -41,7 +57,8 @@ public:
                 auto new_pixel = (*front_buffer)[pos(x,y)];
                 auto old_pixel = (*back_buffer)[pos(x,y)];
                 if(new_pixel != old_pixel){
-                    tft.get()->drawPixel(x, y, new_pixel);
+                    tft.get()->drawRect(x*this->scale, y*this->scale, this->scale, this->scale, new_pixel);
+                    //tft.get()->drawPixel(x, y, new_pixel);
                 }
             }
         }
@@ -78,4 +95,5 @@ private:
     std::vector<uint16_t> *front_buffer;
     std::vector<uint16_t> *back_buffer;
     std::shared_ptr<Adafruit_GFX> tft;
+    int scale = 1;
 };

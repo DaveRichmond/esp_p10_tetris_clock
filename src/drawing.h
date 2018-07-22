@@ -373,7 +373,13 @@ void drawNumbers()
   if (seconds_odd)
   {
     display.drawPixel(15, 12, myWHITE);
+    display.drawPixel(16, 12, myWHITE);
+    display.drawPixel(15, 13, myWHITE);
+    display.drawPixel(16, 13, myWHITE);
     display.drawPixel(15,8, myWHITE);
+    display.drawPixel(16,8, myWHITE);
+    display.drawPixel(15,9, myWHITE);
+    display.drawPixel(16,9, myWHITE);
   }
 }
 
